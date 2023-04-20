@@ -1,0 +1,83 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+      args:
+        - DEV=true
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app
+      - dev-static-data:/vol/web/static
+    command: >
+      sh -c "python manage.py wait_for_db && \
+             python manage.py migrate && \
+             python manage.py runserver 0.0.0.0:8000"
+    environment:
+      - DB_HOST=db
+      - DB_NAME=devdb
+      - DB_USER=devuser
+      - DB_PASS=changeme
+      - DEBUG=1
+      - ALLOWED_HOSTS=${DJANGO_ALLOWED_HOSTS}
+      - TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID}
+      - TWILIO_AUTH_TOKEN=${TWILIO_AUTH_TOKEN}
+      - TWILIO_PHONE_NUMBER=${TWILIO_PHONE_NUMBER}
+    depends_on:
+      - db
+      - redis
+
+  db:
+    image: postgres:13-alpine
+    volumes:
+      - ./dev-db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=devdb
+      - POSTGRES_USER=devuser
+      - POSTGRES_PASSWORD=changeme
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: "redis:alpine"
+
+  celery:
+    build: .
+    restart: always
+    command: celery -A app worker -l info
+    volumes:
+        - ./app:/app
+    environment:
+        - DB_HOST=db
+        - DB_NAME=devdb
+        - DB_USER=devuser
+        - DB_PASS=changeme
+        - TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID}
+        - TWILIO_AUTH_TOKEN=${TWILIO_AUTH_TOKEN}
+        - TWILIO_PHONE_NUMBER=${TWILIO_PHONE_NUMBER}
+    depends_on:
+        - app
+        - db
+        - redis
+
+  celery-beat:
+    build: .
+    restart: always
+    command: celery -A app beat -l INFO
+    volumes:
+        - ./app:/app
+    environment:
+        - DB_HOST=db
+        - DB_NAME=devdb
+        - DB_USER=devuser
+        - DB_PASS=changeme
+    depends_on:
+        - app
+        - db
+        - redis
+
+volumes:
+  dev-db-data:
+  dev-static-data:

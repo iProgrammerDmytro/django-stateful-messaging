@@ -1,0 +1,26 @@
+[
+  {
+    "name": "OPTIN",
+    "condition": "get_smth_from_user",
+    "enter": "init",
+    "states": [
+      {
+        "name": "OY1",
+        "condition": "is_user_reply_yes",
+        "enter": "ask_name",
+        "states": [
+          {
+            "name": "@INITBG",
+            "condition": "user_reply_name",
+            "enter": "ask_check_sugar"
+          }
+        ]
+      },
+      {
+        "name": "ON1",
+        "condition": "is_user_reply_no",
+        "enter": "say_np"
+      }
+    ]
+  }
+]
