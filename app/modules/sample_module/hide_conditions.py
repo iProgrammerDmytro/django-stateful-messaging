@@ -1,48 +1,49 @@
 from pysm import Event, State
 
 from core.models import Session
+
 from .constants import TextStore
 
 
-def is_user_reply_yes(state: State, event: Event):
-    return event.cargo.get("user_reply").lower() == "yes"
+# def is_user_reply_yes(state: State, event: Event):
+#     return event.cargo.get("user_reply").lower() == "yes"
 
 
-def user_reply_name(state: State, event: Event):
-    user_reply = event.cargo.get("user_reply")
+# def user_reply_name(state: State, event: Event):
+#     user_reply = event.cargo.get("user_reply")
 
-    if len(user_reply) != 0:
-        user = event.cargo.get("user")
-        user.name = user_reply
-        user.save()
+#     if len(user_reply) != 0:
+#         user = event.cargo.get("user")
+#         user.name = user_reply
+#         user.save()
 
-        return True
-
-
-def is_user_reply_no(state: State, event: Event):
-    return event.cargo.get("user_reply").lower() == "no"
+#         return True
 
 
-def get_smth_from_user(state: State, event: Event):
-    return event.cargo.get("user_reply") is not None
+# def is_user_reply_no(state: State, event: Event):
+#     return event.cargo.get("user_reply").lower() == "no"
 
 
-def user_reply_bs(state: State, event: Event):
-    user_reply = event.cargo.get("user_reply")
-    user = event.cargo.get("user")
-    if len(user_reply) != 0:
-        try:
-            bg = int(user_reply)
-        except ValueError:
-            pass
-        else:
-            s = Session.objects.get(
-                user=user,
-                active=True
-            )
-            s.last_user_bgcheck_value = bg
-            s.save()
-            return True
+# def get_smth_from_user(state: State, event: Event):
+#     return event.cargo.get("user_reply") is not None
+
+
+# def user_reply_bs(state: State, event: Event):
+#     user_reply = event.cargo.get("user_reply")
+#     user = event.cargo.get("user")
+#     if len(user_reply) != 0:
+#         try:
+#             bg = int(user_reply)
+#         except ValueError:
+#             pass
+#         else:
+#             s = Session.objects.get(
+#                 user=user,
+#                 active=True
+#             )
+#             s.last_user_bgcheck_value = bg
+#             s.save()
+#             return True
 
 
 # TODO: make this functions work

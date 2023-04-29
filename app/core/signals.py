@@ -8,7 +8,7 @@ from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 
 from core.models import Session
-from fsm.bgcheck.enter_methods import ask_agree
+from modules.sample_module.enter_methods import ask_agree
 from fsm.parser import FSMBuilder
 
 
@@ -20,10 +20,10 @@ def initialize_start_attrs(sender, instance, **kwargs):
     if instance.state is None:
         instance.active = True
         build_fsm = FSMBuilder(
-            "fsm.bgcheck.enter_methods",
-            "fsm.bgcheck.conditions"
+            "modules.sample_module.enter_methods",
+            "modules.sample_module.conditions"
         )
-        sm = build_fsm("fsm/module_schema/bgcheck.json")
+        sm = build_fsm("modules/module_schema/sample_schema.json")
 
         binary_sm = pickle.dumps(sm)
         instance.state = binary_sm

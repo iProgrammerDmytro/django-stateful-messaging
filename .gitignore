@@ -131,3 +131,8 @@ dmypy.json
 .DS_Store
 LIMA.drawio
 dev-db-data/
+
+app/fsm/bgcheck/hide_conditions.py
+app/fsm/bgcheck/hide_enter_methods.py
+app/modules/module_schema/bgcheck.json
+.vscode

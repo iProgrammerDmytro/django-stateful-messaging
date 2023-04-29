@@ -4,7 +4,7 @@ from django.core import serializers
 from django_celery_beat.models import CrontabSchedule, PeriodicTask
 
 from core.models import Session
-from fsm.bgcheck.constants import TextStore
+from modules.sample_module.constants import TextStore
 
 
 class TaskCreator:
