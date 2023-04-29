@@ -1,8 +1,8 @@
 [
   {
     "name": "OPTIN",
-    "condition": "get_smth_from_user",
-    "enter": "init",
+    "condition": "fsm_was_created",
+    "enter": "initialize",
     "states": [
       {
         "name": "OY1",
@@ -12,7 +12,7 @@
           {
             "name": "@INITBG",
             "condition": "user_reply_name",
-            "enter": "ask_check_sugar"
+            "enter": "greet_user_create_task"
           }
         ]
       },

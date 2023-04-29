@@ -47,6 +47,8 @@ INSTALLED_APPS = [
 
     "core",
     "mail",
+    "modules",
+    "fsm",
     "django_celery_beat",
     "django_celery_results",
 ]
