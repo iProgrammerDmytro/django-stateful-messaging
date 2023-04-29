@@ -6,3 +6,4 @@ exclude =
   manage.py,
   settings.py
   constants.py
+  text_store.py

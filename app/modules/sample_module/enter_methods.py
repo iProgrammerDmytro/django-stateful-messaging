@@ -10,7 +10,7 @@ from django.db import IntegrityError
 from pysm import Event, State
 
 from core.models import Session
-from core.twilio import send_message
+# from core.twilio import send_message
 from fsm.services.task import TaskCreator
 
 from .text_store import TextStore

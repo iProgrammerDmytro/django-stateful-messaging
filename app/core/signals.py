@@ -8,8 +8,8 @@ from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 
 from core.models import Session
-from modules.sample_module.enter_methods import ask_agree
 from fsm.parser import FSMBuilder
+from modules.sample_module.enter_methods import ask_agree
 
 
 @receiver(pre_save, sender=Session)
